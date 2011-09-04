@@ -118,7 +118,7 @@ class Log {
 		fclose($fp);
 
 		$old = umask(0);
-		@chmod($filename, 0666);
+		#@chmod($filename, 0666);
 		umask($old);
 		return true;
 	}
