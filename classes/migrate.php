@@ -36,9 +36,9 @@ class Migrate
 
 		static::$table = \Config::get('migrations.table', static::$table);
 
-		\DBUtil::create_table(static::$table, array(
-			'current' => array('type' => 'int', 'constraint' => 11, 'null' => false, 'default' => 0)
-		));
+		#\DBUtil::create_table(static::$table, array(
+		#	'current' => array('type' => 'bigint', 'null' => false, 'default' => 0)
+		#), array('current'), FALSE);
 
 		// Check if there is a version
 		$current = \DB::select('current')->from(static::$table)->execute()->get('current');

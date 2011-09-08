@@ -82,9 +82,8 @@ class DBUtil {
 		$sql .= static::process_fields($fields);
 		if ( ! empty($primary_keys))
 		{
-			$key_name = \DB::quote_identifier(implode('_', $primary_keys));
 			$primary_keys = \DB::quote_identifier($primary_keys);
-			$sql .= ",\n\tPRIMARY KEY ".$key_name." (" . implode(', ', $primary_keys) . ")";
+			$sql .= ",\n\tPRIMARY KEY (" . implode(', ', $primary_keys) . ")";
 		}
 		$sql .= "\n)";
 		$sql .= ($engine !== false) ? ' ENGINE = '.$engine.' ' : '';
@@ -194,24 +193,8 @@ class DBUtil {
 	 */
 	protected static function process_charset($charset = null, $is_default = false)
 	{
-		$charset or $charset = \Config::get('db.'.\Config::get('environment').'.charset', null);
-		if(empty($charset))
-		{
-			return '';
-		}
-
-		if(($pos = stripos($charset, '_')) !== false)
-		{
-			$charset = ' CHARACTER SET '.substr($charset, 0, $pos).' COLLATE '.$charset;
-		}
-		else
-		{
-			$charset = ' CHARACTER SET '.$charset;
-		}
-
-		$is_default and $charset = ' DEFAULT'.$charset;
-
-		return $charset;
+		// postgresql doesn't support per-table charsets
+		return '';
 	}
 
 	/**
