@@ -74,9 +74,9 @@ class DBUtil {
 
 	public static function create_table($table, $fields, $primary_keys = array(), $if_not_exists = true, $engine = false, $charset = null)
 	{
-		$sql = 'CREATE TABLE';
+		$sql = 'CREATE TABLE ';
 
-		$sql .= $if_not_exists ? ' IF NOT EXISTS ' : ' ';
+		#$sql .= $if_not_exists ? ' IF NOT EXISTS ' : ' ';
 
 		$sql .= \DB::quote_identifier(DB::table_prefix($table)).' (';
 		$sql .= static::process_fields($fields);
@@ -173,6 +173,7 @@ class DBUtil {
 
 			$sql .= array_key_exists('DEFAULT', $attr) ? ' DEFAULT '. (($attr['DEFAULT'] instanceof \Database_Expression) ? $attr['DEFAULT']  : \DB::escape($attr['DEFAULT'])) : '';
 			$sql .= (array_key_exists('NULL', $attr) && ($attr['NULL'] === true)) ? ' NULL' : ' NOT NULL';
+			$sql .= (array_key_exists('UNIQUE', $attr) && ($attr['UNIQUE'] === true)) ? ' UNIQUE' : '';
 
 			if (array_key_exists('AUTO_INCREMENT', $attr) and $attr['AUTO_INCREMENT'] === true)
 			{
