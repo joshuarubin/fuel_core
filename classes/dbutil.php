@@ -102,7 +102,7 @@ class DBUtil {
 	 */
 	public static function add_fields($table, $fields)
 	{
-		return static::alter_fields('ADD', $table, $fields);
+		return static::alter_fields('ADD COLUMN', $table, $fields);
 	}
 
 	/**
@@ -144,6 +144,9 @@ class DBUtil {
 				return 'DROP '.\DB::quote_identifier($field);
 			}, $fields);
 			$sql .= implode(', ', $fields);
+		} elseif ($type === 'ADD COLUMN') {
+		  $sql .= $type.' ';
+			$sql .= static::process_fields($fields);
 		} else {
 		  $sql .= $type.' ';
 			$sql .= '('.static::process_fields($fields).')';
