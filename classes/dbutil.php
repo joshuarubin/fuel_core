@@ -80,7 +80,7 @@ class DBUtil
 			return;
 		}
 
-		$sql = 'CREATE TABLE';
+		$sql = 'CREATE TABLE ';
 
 		$sql .= \DB::quote_identifier(DB::table_prefix($table)).' (';
 		$sql .= static::process_fields($fields);
